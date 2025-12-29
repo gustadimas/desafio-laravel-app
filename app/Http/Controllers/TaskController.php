@@ -11,12 +11,12 @@ class TaskController extends Controller
     {
         $tarefas = Task::orderByDesc('id')->get();
 
-        return view('tarefas.index', compact('tarefas'));
+        return view('tasks.index', compact('tarefas'));
     }
 
     public function create()
     {
-        return view('tarefas.create');
+        return view('tasks.create');
     }
 
     public function store(Request $request)
@@ -38,7 +38,7 @@ class TaskController extends Controller
 
     public function edit(Task $tarefa)
     {
-        return view('tarefas.edit', compact('tarefa'));
+        return view('tasks.edit', compact('tarefa'));
     }
 
     public function update(Request $request, Task $tarefa)
