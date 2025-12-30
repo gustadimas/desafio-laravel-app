@@ -36,16 +36,48 @@
                                 </td>
                                 <td class="text-end">
                                     <a class="btn btn-sm btn-outline-primary" href="{{ route('tarefas.edit', $tarefa) }}">Editar</a>
-                                    <form
-                                        action="{{ route('tarefas.destroy', $tarefa) }}"
-                                        method="post"
-                                        class="d-inline"
-                                        onsubmit="return confirm('Tem certeza que deseja excluir esta tarefa?')"
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modal-excluir-{{ $tarefa->id }}"
                                     >
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
-                                    </form>
+                                        Excluir
+                                    </button>
+
+                                    @php
+                                        $modalId = 'modal-excluir-' . $tarefa->id;
+                                        $modalTitleId = $modalId . '-titulo';
+                                        $tituloConfirmacao = \Illuminate\Support\Str::limit($tarefa->titulo, 60);
+                                    @endphp
+
+                                    <div
+                                        class="modal fade"
+                                        id="{{ $modalId }}"
+                                        tabindex="-1"
+                                        aria-labelledby="{{ $modalTitleId }}"
+                                        aria-hidden="true"
+                                    >
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="{{ $modalTitleId }}">Confirmar exclusão</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                                </div>
+                                                <div class="modal-body" title="{{ $tarefa->titulo }}">
+                                                    Tem certeza que deseja excluir a tarefa "{{ $tituloConfirmacao }}"?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <form action="{{ route('tarefas.destroy', $tarefa) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-danger">Excluir</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

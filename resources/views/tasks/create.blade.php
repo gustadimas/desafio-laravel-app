@@ -63,4 +63,53 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            const storageKey = 'tarefas:draft';
+            const fields = {
+                titulo: document.getElementById('titulo'),
+                descricao: document.getElementById('descricao'),
+                completado: document.getElementById('completado'),
+            };
+
+            const loadDraft = () => {
+                const raw = localStorage.getItem(storageKey);
+                if (!raw) return;
+
+                try {
+                    const data = JSON.parse(raw);
+                    if (fields.titulo && !fields.titulo.value) {
+                        fields.titulo.value = data.titulo ?? '';
+                    }
+                    if (fields.descricao && !fields.descricao.value) {
+                        fields.descricao.value = data.descricao ?? '';
+                    }
+                    if (fields.completado && !fields.completado.checked) {
+                        fields.completado.checked = Boolean(data.completado);
+                    }
+                } catch (error) {
+                    localStorage.removeItem(storageKey);
+                }
+            };
+
+            const saveDraft = () => {
+                const payload = {
+                    titulo: fields.titulo ? fields.titulo.value : '',
+                    descricao: fields.descricao ? fields.descricao.value : '',
+                    completado: fields.completado ? fields.completado.checked : false,
+                };
+                localStorage.setItem(storageKey, JSON.stringify(payload));
+            };
+
+            if (form) {
+                form.addEventListener('input', saveDraft);
+                form.addEventListener('change', saveDraft);
+                form.addEventListener('submit', () => localStorage.removeItem(storageKey));
+            }
+
+            loadDraft();
+        });
+    </script>
 @endsection
