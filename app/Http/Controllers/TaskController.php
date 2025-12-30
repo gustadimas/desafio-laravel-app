@@ -33,7 +33,7 @@ class TaskController extends Controller
 
         return redirect()
             ->route('tarefas.index')
-            ->with('success', 'Tarefa criada com sucesso');
+            ->with('success', 'Tarefa criada com sucesso.');
     }
 
     public function edit(Task $tarefa)
@@ -55,7 +55,7 @@ class TaskController extends Controller
 
         return redirect()
             ->route('tarefas.index')
-            ->with('success', 'Tarefa atualizada com sucesso');
+            ->with('success', 'Tarefa atualizada com sucesso.');
     }
 
     public function destroy(Task $tarefa)
@@ -64,6 +64,6 @@ class TaskController extends Controller
 
         return redirect()
             ->route('tarefas.index')
-            ->with('success', 'Tarefa excluída com sucesso');
+            ->with('success', 'Tarefa excluída com sucesso.');
     }
 }

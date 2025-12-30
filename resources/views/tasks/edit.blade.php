@@ -20,11 +20,14 @@
                         id="titulo"
                         name="titulo"
                         type="text"
-                        class="form-control"
+                        class="form-control @error('titulo') is-invalid @enderror"
                         value="{{ old('titulo', $tarefa->titulo) }}"
                         required
                         maxlength="250"
                     >
+                    @error('titulo')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
@@ -32,13 +35,17 @@
                     <textarea
                         id="descricao"
                         name="descricao"
-                        class="form-control"
+                        class="form-control @error('descricao') is-invalid @enderror"
                         rows="4"
                         maxlength="500"
                     >{{ old('descricao', $tarefa->descricao) }}</textarea>
+                    @error('descricao')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-check mb-4">
+                    <input type="hidden" name="completado" value="0">
                     <input
                         id="completado"
                         name="completado"
