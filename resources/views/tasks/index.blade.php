@@ -24,7 +24,9 @@
                         @forelse ($tarefas as $tarefa)
                             <tr>
                                 <td class="fw-semibold">{{ $tarefa->titulo }}</td>
-                                <td>{{ $tarefa->descricao ? \Illuminate\Support\Str::limit($tarefa->descricao, 80) : '-' }}</td>
+                                <td title="{{ $tarefa->descricao ?? '' }}">
+                                    {{ $tarefa->descricao ? \Illuminate\Support\Str::limit($tarefa->descricao, 60) : '-' }}
+                                </td>
                                 <td>
                                     @if ($tarefa->completado)
                                         <span class="badge text-bg-success">Concluída</span>
